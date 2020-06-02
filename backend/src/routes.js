@@ -1,22 +1,25 @@
 const express = require('express');
 
-const OngController = require('./controllers/OngController');
+const auth = require('./middlewares/auth')
+
 const IncidentController = require('./controllers/IncidentController');
 const ProfileController = require('./controllers/ProfileController');
-const SessionController = require('./controllers/SessionController');
-
+const UsersController = require('./controllers/UsersController');
 
 const routes = express.Router();
 
-routes.post('/sessions', SessionController.create);
+routes.post('/users', UsersController.create);
+routes.post('/users/login', UsersController.login);
 
-routes.get('/ongs', OngController.index);
-routes.post('/ongs', OngController.create);
 
-routes.get('/profile', ProfileController.index);
+const authRoutes = express.Router();
 
-routes.get('/incidents', IncidentController.index);
-routes.post('/incidents', IncidentController.create);
-routes.delete('/incidents/:id', IncidentController.delete);
+authRoutes.use(auth.authenticate)
 
-module.exports = routes;
+authRoutes.get('/profile/:id', ProfileController.index);
+
+authRoutes.get('/incidents', IncidentController.index);
+authRoutes.post('/incidents', IncidentController.create);
+authRoutes.delete('/incidents/:id', IncidentController.delete);
+
+module.exports = { routes, authRoutes };

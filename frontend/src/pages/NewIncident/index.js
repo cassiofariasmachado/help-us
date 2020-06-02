@@ -8,14 +8,15 @@ import './styles.css';
 
 import logoImg from '../../assets/logo.svg';
 
-export default function NewIncident () {
-    const [title, SetTitle] = useState('');
-    const [description, SetDescription] = useState('');
-    const [value, SetValue] = useState('');
+export default function NewIncident() {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [value, setValue] = useState('');
 
     const history = useHistory();
 
-    const ongId = localStorage.getItem('ongId');
+    const userId = localStorage.getItem('userId');
+    const accessToken = localStorage.getItem('accessToken');
 
     async function handleNewIncident(e) {
         e.preventDefault();
@@ -24,12 +25,13 @@ export default function NewIncident () {
             title,
             description,
             value,
+            recipientId: userId
         };
 
         try {
             await api.post('incidents', data, {
                 headers: {
-                    Authorization: ongId,
+                    Authorization: `Bearer ${accessToken}`,
                 }
             })
 
@@ -47,7 +49,7 @@ export default function NewIncident () {
 
                     <h1>Cadastrar novo caso</h1>
                     <p>Descreva o caso detalhadamente para encontrar um herói para resolver isso.</p>
-                
+
                     <Link className="back-link" to="/profile">
                         <FiArrowLeft size={16} color="#E02041" />
                         Voltar para home
@@ -55,21 +57,21 @@ export default function NewIncident () {
                 </section>
 
                 <form onSubmit={handleNewIncident}>
-                    <input 
-                        placeholder="Título do caso" 
+                    <input
+                        placeholder="Título do caso"
                         value={title}
-                        onChange={e => SetTitle(e.target.value)}
-                        />
-                    <textarea 
-                        placeholder="Descrição" 
+                        onChange={e => setTitle(e.target.value)}
+                    />
+                    <textarea
+                        placeholder="Descrição"
                         value={description}
-                        onChange={e => SetDescription(e.target.value)}
-                        />
-                    <input 
-                        placeholder="Valor em reais" 
+                        onChange={e => setDescription(e.target.value)}
+                    />
+                    <input
+                        placeholder="Valor em reais"
                         value={value}
-                        onChange={e => SetValue(e.target.value)}
-                        />
+                        onChange={e => setValue(e.target.value)}
+                    />
 
                     <button className="button" type="submit">Cadastrar</button>
                 </form>
