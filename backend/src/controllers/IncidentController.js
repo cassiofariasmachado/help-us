@@ -1,27 +1,57 @@
 const connection = require('../database/connection');
+const { getLoggedUser } = require('../utils');
 
 module.exports = {
     async index(request, response) {
         const { page = 1 } = request.query;
-
         const [count] = await connection('incidents').count();
 
         const incidents = await connection('incidents')
-            .join('users', 'users.id', '=', 'incidents.recipientId')
+            .join('users as r', 'r.id', '=', 'incidents.recipientId')
+            .join('users as v', 'v.id', '=', 'incidents.voluntaryId')
             .limit(5)
             .offset((page - 1) * 5)
-            .select([
-                'incidents.*',
-                'users.name',
-                'users.email',
-                'users.phone',
-                'users.city',
-                'users.uf',
-            ]);
+            .select({
+                incident: 'incidents.id',
+                title: 'incidents.title',
+                description: 'incidents.description',
+                recipientName: 'r.name',
+                recipientEmail: 'r.email',
+                recipientPhone: 'r.phone',
+                recipientCity: 'r.city',
+                recipientUf: 'r.uf',
+                voluntaryName: 'v.name',
+                voluntaryEmail: 'v.email',
+                voluntaryPhone: 'v.phone',
+                voluntaryCity: 'v.city',
+                voluntaryUf: 'v.uf',
+            })
 
         response.header('X-Total-Count', count['count(*)']);
 
         return response.json(incidents);
+    },
+
+    async accept(request, response) {
+        const { id } = request.params;
+        const { authorization } = request.headers;
+        const user = getLoggedUser(authorization);
+
+        const incident = await connection('incidents')
+            .where('id', id)
+            .first();
+
+        if (!incident)
+            response.status(404).json({ erro: 'Causa não encontrada!' })
+
+        if (incident.recipientId === user.id)
+            response.status(422).json({ erro: 'O beneficiário não pode ser o mesmo voluntário!' })
+
+        const updatedIncident = await connection('incidents')
+            .where('id', id)
+            .update({ voluntaryId: user.id })
+
+        return response.status(200).json(updatedIncident);
     },
 
     async create(request, response) {

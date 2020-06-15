@@ -20,5 +20,6 @@ authRoutes.get('/profile/:id', ProfileController.index);
 authRoutes.get('/incidents', IncidentController.index);
 authRoutes.post('/incidents', IncidentController.create);
 authRoutes.delete('/incidents/:id', IncidentController.delete);
+authRoutes.post('/incidents/:id/accept', IncidentController.accept);
 
 module.exports = { routes, authRoutes };
