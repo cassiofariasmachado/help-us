@@ -11,10 +11,9 @@ const routes = express.Router();
 routes.post('/users', UsersController.create);
 routes.post('/users/login', UsersController.login);
 
-
 const authRoutes = express.Router();
 
-authRoutes.use(auth.authenticate)
+authRoutes.use(auth.authenticate);
 
 authRoutes.get('/profile/:id', ProfileController.index);
 
