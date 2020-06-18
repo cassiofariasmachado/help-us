@@ -1,5 +1,6 @@
 const connection = require('../database/connection');
 const { getLoggedUser } = require('../utils');
+const { update } = require('../database/connection');
 
 module.exports = {
     async index(request, response) {
@@ -12,7 +13,7 @@ module.exports = {
             .limit(5)
             .offset((page - 1) * 5)
             .select({
-                incident: 'incidents.id',
+                id: 'incidents.id',
                 title: 'incidents.title',
                 description: 'incidents.description',
                 recipientName: 'r.name',
@@ -54,6 +55,19 @@ module.exports = {
         return response.status(200).json(updatedIncident);
     },
 
+    async get(request, response) {
+        const { id } = request.params;
+
+        const incident = await connection('incidents')
+            .where('id', id)
+            .first();
+
+        if (!incident)
+            response.status(404).json({ erro: 'Causa não encontrada!' })
+
+        return response.status(200).json(incident);
+    },
+
     async create(request, response) {
         const { title, description, value, recipientId } = request.body;
 
@@ -63,6 +77,24 @@ module.exports = {
             value,
             recipientId,
         });
+
+        return response.json({ id });
+    },
+
+    async update(request, response) {
+        const { id } = request.params;
+        const { title, description, value } = request.body;
+
+        if (!id)
+            return response.status(400).json({ erro: 'Deve ser informado o id da causa' });
+
+        await connection('incidents')
+            .where('id', id)
+            .update({
+                title,
+                description,
+                value
+            })
 
         return response.json({ id });
     },

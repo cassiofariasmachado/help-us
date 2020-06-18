@@ -7,8 +7,8 @@ import api from '../../services/api';
 
 import './styles.css';
 
-import logoImg from '../../assets/logo.svg';
-import heroesImg from '../../assets/heroes.png';
+import logoImg from '../../assets/logo.png';
+import peopleImg from '../../assets/people.svg';
 
 export default function Logon() {
     const [email, setEmail] = useState('');
@@ -39,9 +39,14 @@ export default function Logon() {
 
     return (
         <div className="logon-container">
-            <section className="form">
-                <img src={logoImg} alt="Be The Hero" />
 
+            <header className="header">
+                <h1>HelpUs - Seja você também um voluntário</h1>
+
+                <img src={logoImg} alt="HelpUs" />
+            </header>
+
+            <section className="form">
                 <form onSubmit={handleLogin}>
                     <h1>Faça seu logon</h1>
 
@@ -61,13 +66,13 @@ export default function Logon() {
                     <button className="button" type="submit">Entrar</button>
 
                     <Link className="back-link" to="/register">
-                        <FiLogIn size={16} color="#E02041" />
-                    Não tenho cadastro
-                </Link>
+                        <FiLogIn size={16} color="#2C89A0" />
+                        Não tenho cadastro
+                    </Link>
                 </form>
-            </section>
 
-            <img src={heroesImg} alt="Heroes" />
+                <img src={peopleImg} alt="People" />
+            </section>
         </div>
     );
 }

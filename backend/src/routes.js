@@ -18,7 +18,9 @@ authRoutes.use(auth.authenticate);
 authRoutes.get('/profile/:id', ProfileController.index);
 
 authRoutes.get('/incidents', IncidentController.index);
+authRoutes.get('/incidents/:id', IncidentController.get);
 authRoutes.post('/incidents', IncidentController.create);
+authRoutes.put('/incidents/:id', IncidentController.update);
 authRoutes.delete('/incidents/:id', IncidentController.delete);
 authRoutes.post('/incidents/:id/accept', IncidentController.accept);
 

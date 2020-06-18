@@ -26,6 +26,10 @@
     max-width: 380px;
 }
 
+.new-incident-container .content img {
+    height: 150px;
+}
+
 .new-incident-container .content section h1 {
     margin: 64px 0 32px;
     font-size: 32px;
