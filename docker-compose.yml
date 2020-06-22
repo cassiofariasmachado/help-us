@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+    api:
+        build:
+            context: backend/
+        image: help-us-api
+        container_name: help-us-api
+        volumes:
+            - ./db.sqlite:/app/src/database/db.sqlite
+
+    app:
+        build:
+            context: frontend
+        image: help-us-app
+        container_name: help-us-app
+        ports:
+            - 80:80
