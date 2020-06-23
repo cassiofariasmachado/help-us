@@ -18,6 +18,7 @@ module.exports = {
                 id: 'incidents.id',
                 title: 'incidents.title',
                 description: 'incidents.description',
+                value: 'incidents.value',
                 recipientName: 'r.name',
                 recipientEmail: 'r.email',
                 recipientPhone: 'r.phone',
