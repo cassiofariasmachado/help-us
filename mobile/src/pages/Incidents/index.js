@@ -54,14 +54,14 @@ export default function Incidents() {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Image source={logoImg} />
+                <Image style={styles.logo} source={logoImg} />
                 <Text style={styles.headerText}>
-                    Total de <Text style={styles.headerTextBold}>{total} casos</Text>.
+                    Total de <Text style={styles.headerTextBold}>{total} causas</Text>.
                 </Text>
             </View>
 
             <Text style={styles.title}>Bem-vindo!</Text>
-            <Text style={styles.description}>Escolha uma das causas abaixo e seja voluntário.</Text>
+            <Text style={styles.description}>Escolha uma das causas abaixo e seja um voluntário.</Text>
 
             <FlatList
                 data={incidents}
@@ -72,13 +72,13 @@ export default function Incidents() {
                 onEndReachedThreshold={0.2}
                 renderItem={({ item: incident }) => (
                     <View style={styles.incident}>
-                        <Text style={styles.incidentProperty}>ONG!</Text>
-                        <Text style={styles.incidentValue}>{incident.name}</Text>
+                        <Text style={styles.incidentProperty}>Beneficiário:</Text>
+                        <Text style={styles.incidentValue}>{incident.recipientName}</Text>
 
-                        <Text style={styles.Property}>CASO!</Text>
+                        <Text style={styles.Property}>Causa:</Text>
                         <Text style={styles.incidentValue}>{incident.title}</Text>
 
-                        <Text style={styles.Property}>VALOR:</Text>
+                        <Text style={styles.Property}>Valor:</Text>
                         <Text style={styles.incidentValue}>{Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL'

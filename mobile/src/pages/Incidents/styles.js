@@ -14,6 +14,10 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
 
+    logo: {
+        height: 150
+    },
+
     headerText: {
         fontSize: 15,
         color: '#737380',
@@ -26,7 +30,6 @@ export default StyleSheet.create({
     title: {
         fontSize: 30,
         marginBottom: 16,
-        marginTop: 48,
         color: '#13131a',
         fontWeight: 'bold'
     },
@@ -69,11 +72,11 @@ export default StyleSheet.create({
         padding: 10,
         margin: 0,
     },
-    
+
     detailsButtonText: {
         color: '#2c89a0',
         fontSize: 15,
         fontWeight: 'bold',
     },
-    
+
 });
