@@ -11,7 +11,7 @@ export default StyleSheet.create({
     },
 
     logo: {
-        height: 100,
+        height: 150,
         width: 150,
         resizeMode: 'contain'
     },
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     },
 
     entrar: {
-        backgroundColor: '#e02041',
+        backgroundColor: '#2c89a0',
         borderRadius: 8,
         height: 50,
         width: '80%',

@@ -61,7 +61,7 @@ export default function Incidents() {
             </View>
 
             <Text style={styles.title}>Bem-vindo!</Text>
-            <Text style={styles.description}>Escolha um dos casos abaixo e salve o dia.</Text>
+            <Text style={styles.description}>Escolha uma das causas abaixo e seja voluntário.</Text>
 
             <FlatList
                 data={incidents}
@@ -89,8 +89,8 @@ export default function Incidents() {
                             style={styles.detailsButton}
                             onPress={() => navigateToDetail(incident)}
                         >
-                            <Text style={styles.detailsButtonText}>Ver mais detalhes</Text>
-                            <Feather name="arrow-right" size={16} color="#E02041" />
+                            <Text style={styles.detailsButtonText}>Ajudar</Text>
+                            <Feather name="arrow-right" size={16} color="#2c89a0" />
                         </TouchableOpacity>
                     </View>
                 )}

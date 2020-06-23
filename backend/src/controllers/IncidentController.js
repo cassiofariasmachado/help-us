@@ -1,15 +1,17 @@
 const connection = require('../database/connection');
 const { getLoggedUser } = require('../utils');
-const { update } = require('../database/connection');
 
 module.exports = {
     async index(request, response) {
         const { page = 1 } = request.query;
-        const [count] = await connection('incidents').count();
+        const [count] = await connection('incidents')
+            .join('users as r', 'r.id', '=', 'incidents.recipientId')
+            .leftJoin('users as v', 'v.id', '=', 'incidents.voluntaryId')
+            .count();
 
         const incidents = await connection('incidents')
             .join('users as r', 'r.id', '=', 'incidents.recipientId')
-            .join('users as v', 'v.id', '=', 'incidents.voluntaryId')
+            .leftJoin('users as v', 'v.id', '=', 'incidents.voluntaryId')
             .limit(5)
             .offset((page - 1) * 5)
             .select({
