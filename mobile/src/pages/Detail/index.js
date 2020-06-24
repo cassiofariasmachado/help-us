@@ -13,7 +13,7 @@ export default function Detail() {
     const route = useRoute();
 
     const incident = route.params.incident;
-    const message = `Olá ${incident.name}, estou entrando em contato, pois gostaria de ajudar no caso ${incident.title} com o valor de ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}`;
+    const message = `Olá ${incident.recipientName}, estou entrando em contato, pois gostaria de ajudar sua causa \"${incident.title}\" com o valor de ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}`;
 
     function navigateBack() {
         navigation.goBack();
@@ -22,13 +22,13 @@ export default function Detail() {
     function sendMail() {
         MailComposer.composeAsync({
             subject: `Herói do caso: ${incident.title}`,
-            recipients: [incident.email],
+            recipients: [incident.recipientEmail],
             body: message,
         })
     }
 
     function sendWhatsapp() {
-        Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
+        Linking.openURL(`whatsapp://send?phone=${incident.recipientPhone}&text=${message}`);
     }
 
     return (
